@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    background:url("space.svg");
+    background-repeat:no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    background-color: #444444;
+}
+
+div {
+    display:block;
+}
+
+h1 {
+    margin:20% auto;
+    text-align:center;
+    font-size:48px;
+    color:white;
+    font-family:Courier;
+}
