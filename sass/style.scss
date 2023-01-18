@@ -1,0 +1,261 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+ }
+
+html {
+    overflow-y: scroll;
+    height: 100%;
+    font: 100%/1.5 sans-serif;
+    word-wrap: break-word;
+    margin: 0 auto;
+    padding: 1.5em;
+ }
+
+@media (min-width: 768px) {
+    html {
+        font-size: 125%;
+        max-width: 42em;
+ } }
+
+body {
+    padding-bottom: 50px;
+}
+
+h1, h2, h3, h4 {
+    margin: 1.5rem 0 1.15rem 0;
+    line-height: 1.25;
+    color: #333;
+ }
+
+
+p {
+    margin: 1em 0;
+    line-height: 1.5;
+ }
+
+ol, ul {
+    margin: 1em;
+ }
+ol li ol, ol li ul, ul li ol, ul li ul {
+    margin: 0 2em;
+ }
+ol li p, ul li p {
+    margin: 0;
+ }
+
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+$dark-blue : rgba( 100, 150, 210, 1);
+$body-blue : rgba( 60, 110, 180, 1);
+$body-trans-blue : rgba(252, 252, 252, 0.5);
+$body-trans-blue-old : rgba(66, 135, 245, .7);
+$maize : rgb(255, 203, 5);
+
+$header-grad-1 : 10%;
+$header-grad-2 : 20%;
+$header-height : 80px;
+$content-max-width : 1100px;
+$content-margin : 7%;
+
+.site-header {
+    overflow: hidden;
+    position: sticky;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: linear-gradient(to top, 
+        rgba(0,0,0,0) $header-grad-1, $body-blue $header-grad-2);
+    font-family : Verdana;    
+}
+
+.site-header-wrapper {
+    max-width:$content-max-width;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 0;
+    height: $header-height;
+}
+
+#site-title {
+    float: left;
+    font-size: 32px;
+    color: $maize;
+    text-decoration: none;
+    padding: 15px;
+    text-shadow: 1px 1px 2px black;
+    text-decoration: underline;
+}
+
+
+.site-nav ul {
+    margin: 0;  
+    padding: 0;
+    float: right;
+}
+
+.site-nav li {
+    list-style: none;  
+    float: right;
+    text-align: center;
+}
+
+.site-nav a {
+    text-decoration: none;
+    text-align: center;
+    color: $maize;
+    font-size:18px;
+    display: block;  
+    padding: 0 20px;  
+    text-align: center;
+    line-height: $header-height;
+    text-shadow: 1px 1px black;
+}  
+
+.site-nav a:hover {
+  background: linear-gradient(to top, 
+        rgba(0,0,0,0) $header-grad-1, $dark-blue $header-grad-2);
+        
+    text-shadow: 1px 1px #333333;
+}
+
+main {
+}
+
+.content {
+    clear:both;
+}
+
+.content-wrapper {
+    padding:10px;
+}
+
+.post {
+    border: 3px dashed $body-blue;
+    font-family : helvetica, arial;
+    max-width:$content-max-width;
+    margin: 0 auto;
+    background-color: $body-trans-blue;
+    border-radius: 12px;
+    color : black;
+}
+
+.post h1, .post h2 {
+    text-shadow: 1px 1px 2px black;
+    text-decoration: underline;
+    color : $maize;
+}
+
+.post-header {
+    overflow: auto;
+    padding:20px;
+}
+
+#andrew-img {
+    float:right;
+    max-width: 100%;
+    height: auto;
+    width: 30%;
+    margin-right:$content-margin;   
+    margin-top: 20px;
+}
+
+.post-title {
+    margin-top: 20px;
+    font-size: 30px;
+}
+.post-header-text {
+    font-size: 20px;
+}
+
+.post-title, .post-header-text {
+    margin-left: $content-margin+5%;
+}
+
+.post hr {
+    border-top: 4px dotted $maize;
+    border-bottom: 0px;
+    border-left: 0px;
+    border-right: 0px;
+    width:40%;
+    margin:15px auto;
+}
+
+.post-content {
+    margin: 0 $content-margin;
+    padding: 0 0 30px 0;
+}
+
+.post-content p {
+    font-size: 18px;
+    display:inline;
+}
+
+.post-content h2 {
+    display:inline;
+    margin-right: 10px;
+}
+
+.other-contacts {
+    text-align : center;
+    display: block;
+    margin-top:10px;
+}
+
+.site-footer {
+    overflow: hidden;
+    max-width:$content-max-width;
+    margin: 0 auto;
+}
+
+.site-footer p {
+    float:right;
+    margin: 20px $content-margin;
+}
+
+.self-author {
+    text-decoration: underline;
+}
+
+.pub-table {
+  margin : 10px 0;
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  border-bottom : 2px solid $maize;
+}
+
+.pub-table thead th {
+  color : $body-blue;
+  border-bottom : 2px solid $maize;
+}
+
+.pub-table thead th:nth-child(1) {
+  width: 30%;
+}
+
+.pub-table thead th:nth-child(2) {
+  width: 40%;
+}
+
+.pub-table thead th:nth-child(3) {
+  width: 10%;
+}
+
+.pub-table thead th:nth-child(4) {
+  width: 20%;
+}
+
+.pub-table th, td {
+  padding: 10px 20px;
+}
+
+.pub-table tbody td:nth-child(3) {
+  text-align: center;
+}

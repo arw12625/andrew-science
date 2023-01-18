@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang=en-us>
+<head>
+{% include 'head.j2' %}
+</head>
+<body>
+    {% include 'header.j2' %}
+	
+    <h2>{{ post_info['title'] }}</h2>
+    
+    {% include post_info['template_file'] %}
+    
+    {% include 'footer.j2' %}
+</body>
+</html>

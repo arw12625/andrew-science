@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang=en-us>
+<head>
+{% include 'head.j2' %}
+</head>
+<body>
+    {% include 'header.j2' %}
+	
+    <h2>{{ page_info['title'] }}</h2>
+    
+    {% include page_info['template_file'] %}
+    
+    <ul>
+    {% for post_id in page_info['posts'] %}
+        {% set post_info = page_info['post_infos'][post_id] %}
+        <li><a href="{{ post_info['href'] }}">{{ post_info['title'] }}</a></li>
+    {% endfor %}
+    </ul>
+    
+    {% include 'footer.j2' %}
+</body>
+</html>

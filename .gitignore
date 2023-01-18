@@ -1,0 +1,15 @@
+build/
+site/
+
+# Python
+__pycache__/
+
+__pypackages__/
+
+#pycharm stuff
+.idea/
+
+
+# Environments
+.env
+env/

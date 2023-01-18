@@ -1,0 +1,46 @@
+export PAGE_DIR := $(CURDIR)
+
+CONTENT_POSTS := $(shell $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/get_posts.py $(PAGE_ID))
+
+PAGE_MD = $(PAGE_ID).md
+PAGE_J2 := $(SITE_DIR)/$(PAGE_ID).j2
+PAGE_TEMPLATE_J2 := $(TEMPLATE_DIR)/page.j2
+PAGE_HTML := $(BUILD_DIR)/$(PAGE_ID).html
+PAGE_DEPS := $(PAGE_J2) $(PAGE_TEMPLATE_J2) $(addprefix $(TEMPLATE_DIR)/,head.j2 header.j2 footer.j2)
+
+RENDER_PAGE := $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/renderPage.py
+RENDER_PAGE_DEPS := $(BUILD_SCRIPTS)/renderPage.py $(BUILD_SCRIPTS_DEPS)
+
+all: $(PAGE_HTML) $(CONTENT_POSTS)
+
+.PHONY: all clean $(CONTENT_POSTS)
+
+clean:
+	@echo Cleaning $(PAGE_ID)
+ifneq ("$(wildcard %/Makefile)","")
+	for post in $(CONTENT_POSTS); do \
+	$(MAKE) -C $$post POST_ID=$$post clean; \
+	done
+else
+	for post in $(CONTENT_POSTS); do \
+	$(MAKE) -C $$post -f ../../MakefilePost POST_ID=$$post clean; \
+	done
+endif
+
+# Use jinja2 to build the html for this page
+$(PAGE_HTML):  $(PAGE_DEPS) $(RENDER_PAGE_DEPS)
+	$(RENDER_PAGE) $(PAGE_ID) $(PAGE_TEMPLATE_J2) $(PAGE_HTML)
+
+# Convert markdown into html input to jinja2
+$(PAGE_J2): $(PAGE_MD) $(MARKDOWN_DEPS)
+	$(MARKDOWN) $(PAGE_MD) $(PAGE_J2)
+
+# Multiple recipes for creating each content post	
+$(CONTENT_POSTS): % :
+ifneq ("$(wildcard %/Makefile)","")
+# 1. Use Makefile present if present in post directory
+	$(MAKE) -C $@ POST_ID=$@
+else
+# 2. Use default rule for pages. Convert markdown to html for the post
+	$(MAKE) -C $@ -f ../../MakefilePost POST_ID=$@
+endif

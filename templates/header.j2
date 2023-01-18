@@ -1,0 +1,12 @@
+<header id="site-header">
+    <div id="site-header-wrapper">
+        <a id="site-title" href="index.html">Andrew Wintenberg</a>
+        <nav class="site-nav">
+            <ul>
+            {% for item in navigation %}
+                <li><a href="{{ item['href'] }}">{{ item['caption'] }}</a></li>
+            {% endfor %}
+            </ul>
+        </nav> 
+    </div>
+</header>
