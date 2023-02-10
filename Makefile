@@ -1,3 +1,6 @@
+export BUILD_MODE ?= all
+export SHELL:=/bin/bash
+
 # Python for running build scripts
 export PYTHON_COMMAND := python
 export BASE_DIR := $(CURDIR)
@@ -33,7 +36,7 @@ clean:
 	rm -rf $(BUILD_DIR)
 	$(MAKE) -C content clean
 
-.PHONY: all clean $(BUILD_DIR) $(BUILD_STATIC_DIRS) $(STYLE_DIR) content check upload pytest
+.PHONY: all clean content check upload pytest
 
 # Only use sass to compile non-partial files
 $(CSS_FILES): $(CSS_DIR)/%.css : $(SASS_DIR)/%.scss $(SASS_PARTIALS) | $(STYLE_DIR)
@@ -70,7 +73,7 @@ check: pytest
 
 pytest:
 	cd $(BUILD_SCRIPTS)/..
-	poetry run pytest
+	pytest
 	
 upload:
 	@echo UPLOAD NOT IMPLEMENTED

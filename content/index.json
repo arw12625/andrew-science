@@ -1,10 +1,7 @@
 {
     "creation_date": "2023-01-16 13:26:32.367539",
-    "id": "projects",
+    "id": "index",
     "last_edit_date": "2023-02-09 15:39:41.521666",
-    "pages": [
-        "raycaster/raycaster"
-    ],
     "make": "page",
-    "title": "Projects"
+    "title": "Homepage"
 }

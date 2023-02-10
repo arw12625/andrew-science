@@ -3,50 +3,38 @@ export CONTENT_DIR := $(CURDIR)
 export TEMPLATE_DIR := $(BASE_DIR)/templates
 export SITE_DIR := $(BASE_DIR)/site
 
-# Content to convert to HTML
-CONTENT_PAGES := $(shell $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/get_pages.py)
-INDEX_J2 := $(TEMPLATE_DIR)/index.j2
-INDEX_HTML := $(BUILD_DIR)/index.html
-INDEX_DEPS := $(INDEX_J2) $(addprefix $(TEMPLATE_DIR)/,head.j2 header.j2 footer.j2 contacts.j2)
+export get_page_info = $$(shell $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/get_page_info.py $$(1) $$(2))
 
-export BUILD_SCRIPTS_DEPS := $(addprefix $(BUILD_SCRIPTS)/,pages.py posts.py)
+export get_page_make = $$(strip $$(call get_page_info,$$(1),make))
+export get_page_make_opt_tmp = $$(if $$(1), -f $(CONTENT_DIR)/$$(1).mak,)
+export get_page_make_opt = $$(call get_page_make_opt_tmp,$$(call get_page_make,$$(1)))
 
-RENDER_INDEX := $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/renderIndex.py
-RENDER_INDEX_DEPS := $(BUILD_SCRIPTS)/renderIndex.py $(BUILD_SCRIPTS_DEPS)
+export COMMA := ,
+export SPACE := $() $()
+export get_pages = $$(subst ',,$$(subst [,,$$(subst ],,$$(subst $$(COMMA),$$(SPACE),$$(call get_page_info,$$(1),pages)))))
+
+export get_abs_id = $$(shell $$(PYTHON_COMMAND) $$(BUILD_SCRIPTS)/get_abs_id.py $$(1))
+
+export BUILD_SCRIPTS_DEPS := $(addprefix $(BUILD_SCRIPTS)/,content.py)
+
+export RENDER = $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/render.py
+export RENDER_DEPS := $(BUILD_SCRIPTS)/render.py $(BUILD_SCRIPTS_DEPS)
 
 export MARKDOWN := $(PYTHON_COMMAND) $(BUILD_SCRIPTS)/markdownContent.py
 export MARKDOWN_DEPS := $(BUILD_SCRIPTS)/markdownContent.py
 
-all: $(CONTENT_PAGES) $(INDEX_HTML)
+export MAKEFILE_PAGE := $(CONTENT_DIR)/page.mak
 
-.PHONY: all clean $(CONTENT_PAGES) $(SITE_DIR)
+export CONTENT_JSON := $(CONTENT_DIR)/content.json
+PAGE_ID := content
+
+all:
+	$(MAKE) -f recurse.mak PAGE_ID=$(PAGE_ID)
 
 clean:
-	@echo Cleaning content
-	rm -rf $(SITE_DIR)
-ifneq ("$(wildcard %/Makefile)","")
-	for page in $(CONTENT_PAGES); do \
-	$(MAKE) -C $$page PAGE_ID=$$page clean; \
-	done
-else
-	for page in $(CONTENT_PAGES); do \
-	$(MAKE) -C $$page -f ../MakefilePage PAGE_ID=$$page clean; \
-	done
-endif
+	$(MAKE) -f recurse.mak PAGE_ID=$(PAGE_ID) clean
 
-# Multiple recipes for creating each content page	
-$(CONTENT_PAGES): % : | $(SITE_DIR)
-ifneq ("$(wildcard %/Makefile)","")
-# 1. Use Makefile present if present in page directory
-	$(MAKE) -C $@ PAGE_ID=$@
-else
-# 2. Use default rule for pages. Convert markdown to html for the page and make child posts
-	$(MAKE) -C $@ -f ../MakefilePage PAGE_ID=$@
-endif
+.PHONY: all clean
 
-$(INDEX_HTML): $(INDEX_DEPS) $(RENDER_INDEX_DEPS)
-	$(RENDER_INDEX) $(INDEX_J2) $(INDEX_HTML)
-
-# Make site directory if needed to hold marked up files/templates
-$(SITE_DIR):
-	mkdir -p $@
+# Recursively build content
+#include recurse.mak

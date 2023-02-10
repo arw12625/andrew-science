@@ -1,5 +1,8 @@
 {
     "pages": [
-        "projects"
+        "index","projects/projects"
+    ],
+    "navigable": [
+        "projects/projects"
     ]
 }

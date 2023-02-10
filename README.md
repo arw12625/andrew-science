@@ -1,7 +1,7 @@
 Personal Website
 ================
 This is the repository containing the content for my personal website and the tools used to build it.
-The content is written in Markdown and is converted to HTML using a custom content management system using GNU Make and Python.
+The content is written in Markdown and is converted to HTML using a custom static site generator using GNU Make and Python.
 
 ## Building
 The project is built using GNU Make.
@@ -20,3 +20,6 @@ The project has additional dependencies that are installed by Poetry:
 - [Jinja2](https://jinja.palletsprojects.com/en/3.1.x/) - for templating
 - [Python-Markdown](https://python-markdown.github.io/) - for converting Markdown to HTML
 - [pytest](https://docs.pytest.org/en/7.2.x/) - for testing
+
+Some projects require Docker to build, so ensure your instance of Docker is running before building.
+Some of the pages also utilize WebAssembly, and must be hosted on a server as they cannot be viewed locally due to CORS restrictions.

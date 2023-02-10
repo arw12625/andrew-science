@@ -1,10 +1,11 @@
 <header id="site-header">
     <div id="site-header-wrapper">
-        <a id="site-title" href="index.html">Andrew Wintenberg</a>
+        <a id="site-title" href="/index.html">Andrew Wintenberg</a>
         <nav class="site-nav">
             <ul>
-            {% for item in navigation %}
-                <li><a href="{{ item['href'] }}">{{ item['caption'] }}</a></li>
+            {% for sub_page_id in content.get_info()['navigable'] %}
+                {% set sub_page_id = content.page_rel_abs_id(sub_page_id) %}
+                <li><a href="{{ content.get_page_url(sub_page_id) }}">{{ content.get_page_info(sub_page_id)['title'] }}</a></li>
             {% endfor %}
             </ul>
         </nav> 

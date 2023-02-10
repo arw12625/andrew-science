@@ -6,14 +6,13 @@
 <body>
     {% include 'header.j2' %}
 	
-    <h2>{{ page_info['title'] }}</h2>
+    <h2>{{ content.get_page_info(page_id)['title'] }}</h2>
     
-    {% include page_info['template_file'] %}
+    {% include content.get_page_template(page_id) %}
     
     <ul>
-    {% for post_id in page_info['posts'] %}
-        {% set post_info = page_info['post_infos'][post_id] %}
-        <li><a href="{{ post_info['href'] }}">{{ post_info['title'] }}</a></li>
+    {% for sub_page_id in content.get_page_info(page_id).get('pages', []) %}
+        <li><a href="{{ content.get_page_url(sub_page_id) }}">{{ content.get_page_info(sub_page_id)['title'] }}</a></li>
     {% endfor %}
     </ul>
     
